@@ -6,21 +6,28 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = React.useState(false);
 
   return (
-    <nav className="bg-white shadow-lg fixed w-full z-50">
+    <nav className="bg-yellow-500 shadow-lg fixed w-full z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-        <div className="flex-shrink-0 flex items-center">
-  <Link to="/">
-    <img src="/logo.jpg" alt="TrustEdgeFin Logo" className="h-16 w-50" />
-  </Link>
-</div>
-
+        <div className="flex justify-between h-16 items-center">
           
+          {/* Logo & Animated Text */}
+          <div className="flex items-center space-x-3">
+            <span className="text-2xl font-bold text-gray-800 animate-text-slide">
+              TrustEdge Finance
+            </span>
+            <Link to="/">
+              <img src="/logo.jpg" alt="TrustEdgeFin Logo" className="h-16 w-auto" />
+            </Link>
+          </div>
+
+          {/* Navigation Links */}
           <div className="hidden md:flex items-center space-x-8">
             <Link to="/" className="text-gray-700 hover:text-blue-600 transition">HOME</Link>
             <Link to="/services" className="text-gray-700 hover:text-blue-600 transition">SERVICES</Link>
             <Link to="/blog" className="text-gray-700 hover:text-blue-600 transition">BLOG</Link>
             <Link to="/contact" className="text-gray-700 hover:text-blue-600 transition">CONTACT US</Link>
+
+            {/* WhatsApp Contact */}
             <a 
               href="https://wa.me/8195896258" 
               className="bg-green-500 text-white px-4 py-2 rounded-full flex items-center space-x-2 hover:bg-green-600 transition"
@@ -30,6 +37,7 @@ export default function Navbar() {
             </a>
           </div>
 
+          {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -50,7 +58,7 @@ export default function Navbar() {
             <Link to="/blog" className="block px-3 py-2 text-gray-700 hover:text-blue-600">BLOG</Link>
             <Link to="/contact" className="block px-3 py-2 text-gray-700 hover:text-blue-600">CONTACT US</Link>
             <a 
-              href="https://wa.me/1234567890" 
+              href="https://wa.me/8195896258" 
               className="block px-3 py-2 text-green-500 hover:text-green-600"
             >
               CONTACT (WhatsApp)
