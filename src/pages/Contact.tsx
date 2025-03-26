@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Mail, Phone, MapPin } from "lucide-react";
 
@@ -11,35 +12,44 @@ export default function Contact() {
 
   const [status, setStatus] = useState("");
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
+  
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setStatus("Sendi...");
-
-    window.Email.send({
-      Host: "smtp.gmail.com",
-      Username: "22bma045@nith.ac.in",
-      Password: "19072004285",
-      To: "22bma045@nith.ac.in",
-      From: formData.email,
-      Subject: `New Contact Form Message from ${formData.name}`,
-      Body: `Name: ${formData.name} <br> Email: ${formData.email} <br> Phone: ${formData.phone} <br> Message: ${formData.message}`,
-    }).then((message) => {
-      if (message === "OK") {
-        setStatus("Message sent successfully!");
-        setFormData({ name: "", email: "", phone: "", message: "" });
-      } else {
-        setStatus("Failed to send message.");
-      }
-    });
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault(); // Ensure event is used correctly
+    setStatus("Sending...");
+  
+ 
+  
+    try {
+      await fetch("https://api.emailjs.com/api/v1.0/email/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          service_id: "service_mezb8yk",
+          template_id:"template_92ja88a",
+          user_id:"q9loXnbZLCo6sGzL3" ,
+          template_params: formData,
+        }),
+      });
+  
+      setStatus("Message sent successfully!");
+      setFormData({ name: "", email: "", phone: "", message: "" });
+    } catch (error) {
+      console.error("Error sending message:", error);
+      setStatus("Failed to send message.");
+    }
   };
+  
 
   return (
     <div className="pt-16">
-      <script src="https://smtpjs.com/v3/smtp.js"></script>
       <div className="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
         <div className="max-w-lg mx-auto md:max-w-none md:grid md:grid-cols-2 md:gap-8">
           <div className="animate-fade-in">
